@@ -1,6 +1,7 @@
 from typing import Any, Generator
 
 import pytest
+from _pytest.fixtures import SubRequest
 from playwright.sync_api import Playwright, expect, Page
 
 
@@ -38,5 +39,12 @@ def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -
     # Pycharm suggests using Generator[Page, Any, None] instead of Page for yield statement
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context(storage_state="storage_state.json")
+    yield context.new_page()
+    browser.close()
+
+@pytest.fixture
+def chromium_page_without_state(playwright: Playwright) -> Generator[Page, Any, None]:
+    browser = playwright.chromium.launch(headless=False)
+    context = browser.new_context()
     yield context.new_page()
     browser.close()
