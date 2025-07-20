@@ -1,6 +1,11 @@
 import pytest
 from playwright.sync_api import expect, Page
 
+from fixtures.browsers import chromium_page_without_state
+from pages.dashboard_page import DashboardPage
+from pages.login_page import LoginPage
+from pages.registration_page import RegistrationPage
+
 
 @pytest.mark.courses
 @pytest.mark.regression
@@ -19,23 +24,26 @@ def test_empty_courses_list(chromium_page_with_state: Page):
 
 @pytest.mark.parametrize("email, password", [
         ("user.name@gmail.com", "password"),
-        ("user.name@gmail.com", "  "),
-        ("  ", "password")
+        ("user.name@gmail.com", '  '),
+        ('  ', "password")
 ])
-def test_wrong_email_or_password_authorization(chromium_page_without_state: Page, email: str, password: str):
+def test_wrong_email_or_password_authorization(login_page: LoginPage, email: str, password: str):
+        login_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
+        login_page.fill_login_form(email, password)
+        login_page.click_login_button()
+        login_page.check_visible_wrong_email_or_password_alert()
 
-        chromium_page_without_state.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
-
-        email_input = chromium_page_without_state.get_by_test_id('login-form-email-input').locator('input')
-        email_input.fill(email)
-
-        password_input = chromium_page_without_state.get_by_test_id('login-form-password-input').locator('input')
-        password_input.fill(password)
-
-        login_button = chromium_page_without_state.get_by_test_id('login-page-login-button')
-        login_button.click()
-
-        wrong_email_or_password_alert = chromium_page_without_state.get_by_test_id('login-page-wrong-email-or-password-alert')
-        expect(wrong_email_or_password_alert).to_be_visible()
-        expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
-        chromium_page_without_state.wait_for_timeout(2000)
+@pytest.mark.parametrize("email, username, password", [
+        ("user.name@gmail.com", "username", "password")
+])
+def test_successful_registration(
+        registration_page: RegistrationPage,
+        dashboard_page: DashboardPage,
+        email: str,
+        username: str,
+        password: str
+):
+        registration_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+        registration_page.fill_registration_form(email, username, password)
+        registration_page.click_registration_button()
+        dashboard_page.check_visible_dashboard_title()
