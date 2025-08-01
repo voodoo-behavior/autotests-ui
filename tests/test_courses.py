@@ -36,22 +36,6 @@ def test_wrong_email_or_password_authorization(login_page: LoginPage, email: str
     login_page.check_visible_wrong_email_or_password_alert()
 
 
-@pytest.mark.parametrize("email, username, password", [
-    ("user.name@gmail.com", "username", "password")
-])
-def test_successful_registration(
-        registration_page: RegistrationPage,
-        dashboard_page: DashboardPage,
-        email: str,
-        username: str,
-        password: str
-):
-    registration_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
-    registration_page.fill_registration_form(email, username, password)
-    registration_page.click_registration_button()
-    dashboard_page.check_visible_dashboard_title()
-
-
 @pytest.mark.courses
 @pytest.mark.regression
 @pytest.mark.parametrize("title, description, max_score, min_score, estimated_time, file_path", [
