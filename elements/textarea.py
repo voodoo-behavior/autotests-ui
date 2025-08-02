@@ -3,11 +3,11 @@ from playwright.sync_api import expect, Locator
 from elements.base_element import BaseElement
 
 
-class Input(BaseElement):
+class TextArea(BaseElement):
     def get_locator(self, nth: int = 0, **kwargs) -> Locator:
-        return super().get_locator(nth=nth, **kwargs).locator('input')
+        return super().get_locator(nth=nth, **kwargs).locator('textarea').first
 
-    def fill(self, value: str, nth: int = 0, **kwargs):
+    def fill(self, value: str, nth:int = 0, **kwargs):
         locator = self.get_locator(nth=nth, **kwargs)
         locator.fill(value)
 
