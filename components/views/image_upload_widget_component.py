@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Page, expect
 
 from components.base_component import BaseComponent
@@ -35,6 +36,7 @@ class ImageUploadWidgetComponent(BaseComponent):
             page, f'{identifier}-image-upload-widget-input', 'Upload input'
         )
 
+    @allure.step('Checking image upload widget is visible when image uploaded={is_image_uploaded}')
     def check_visible(self, is_image_uploaded: bool = False):
         self.image_upload_info_icon.check_visible()
 
