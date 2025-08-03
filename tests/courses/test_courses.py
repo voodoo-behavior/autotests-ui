@@ -51,3 +51,54 @@ class TestCourses:
             min_score="10",
             estimated_time="2 weeks"
         )
+
+    def test_edit_course(self, create_course_page: CreateCoursePage, courses_list_page: CoursesListPage):
+
+        # Step 1. Open course creation page
+        create_course_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
+
+        # Step 2. Fill out the form with valid data, upload an image and save the course
+        create_course_page.image_upload_widget.upload_preview_image('./testdata/files/image.png')
+        create_course_page.image_upload_widget.check_visible(is_image_uploaded=True)
+        create_course_page.create_course_form.fill(
+            title="Playwright",
+            estimated_time="2 weeks",
+            description="Playwright",
+            max_score="100",
+            min_score="10"
+        )
+        create_course_page.create_course_toolbar_view.click_create_course_button()
+
+        # Step 3. Check if the created course card is displayed in the list of courses
+        courses_list_page.course_view.check_visible(
+            index=0,
+            title="Playwright",
+            max_score="100",
+            min_score="10",
+            estimated_time="2 weeks"
+        )
+
+        # Step 4. Open the created course card for editing
+        courses_list_page.course_view.menu.click_edit(index=0)
+
+        # Step 5. Modify fields (title, estimated time, description, max score, min score) and save the changes
+        create_course_page.create_course_form.fill(
+            title="Pytest",
+            estimated_time="1 week",
+            description="Pytest",
+            max_score="1000",
+            min_score="1"
+        )
+        create_course_page.create_course_toolbar_view.click_create_course_button()
+
+        # Step 6. Check if the course card with updated data is displayed
+        courses_list_page.course_view.check_visible(
+            index=0,
+            title="Pytest",
+            max_score="1000",
+            min_score="1",
+            estimated_time="1 week"
+        )
+
+
+
