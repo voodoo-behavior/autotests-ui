@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Page, expect
 
 from components.base_component import BaseComponent
@@ -19,6 +20,7 @@ class CourseViewComponent(BaseComponent):
         self.estimated_time_text = Text(
             page, 'course-estimated-time-info-row-view-text', 'Estimated time')
 
+    @allure.step('Checking course view at index "{index}" is visible')
     def check_visible(
             self,
             index: int,

@@ -1,5 +1,6 @@
 from re import Pattern
 
+import allure
 from playwright.sync_api import Page, expect
 
 from components.base_component import BaseComponent
@@ -16,6 +17,7 @@ class SidebarListItemComponent(BaseComponent):
         self.title = Text(page, f'{identifier}-drawer-list-item-title-text', 'Sidebar list item title')
         self.button = Button(page, f'{identifier}-drawer-list-item-button', 'Sidebar list item button')
 
+    @allure.step('Checking sidebar list item "{title}" is visible')
     def check_visible(self, title: str):
         self.icon.check_visible()
 
