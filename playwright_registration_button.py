@@ -1,10 +1,13 @@
 from playwright.sync_api import sync_playwright, expect
 
+from config import settings
+from utils.routes import AppRoute
+
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
-    page = browser.new_page()
+    page = browser.new_page(base_url=settings.get_base_url())
 
-    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+    page.goto(AppRoute.REGISTRATION)
 
     registration_email_input = page.get_by_test_id('registration-form-email-input').locator('input')
     registration_username_input = page.get_by_test_id('registration-form-username-input').locator('input')
@@ -15,13 +18,13 @@ with sync_playwright() as p:
     expect(registration_button).to_be_disabled()
 
     expect(registration_email_input).to_be_visible()
-    registration_email_input.fill('user.name@gmail.com')
+    registration_email_input.fill(settings.test_user.email)
 
     expect(registration_username_input).to_be_visible()
-    registration_username_input.fill('username')
+    registration_username_input.fill(settings.test_user.username)
 
     expect(registration_password_input).to_be_visible()
-    registration_password_input.fill('password')
+    registration_password_input.fill(settings.test_user.password)
 
     # Check Registration button is enabled
     expect(registration_button).to_be_enabled()

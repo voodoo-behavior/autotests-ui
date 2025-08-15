@@ -48,4 +48,7 @@ class Settings(BaseSettings):
             storage_state_file=storage_state_file
         )
 
+    def get_base_url(self) -> str:
+        return f"{self.app_url}/"
+
 settings = Settings.initialize()
