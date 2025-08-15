@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     )
     app_url: HttpUrl
     headless: bool
-    browser: list[Browser]
+    browsers: list[Browser]
     test_user: TestUser
     test_data: TestData
     videos_dir: DirectoryPath
