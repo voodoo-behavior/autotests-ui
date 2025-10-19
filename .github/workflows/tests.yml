@@ -47,7 +47,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Download Allure Results Artifact
+      - name: Download Allure Results artifact
         uses: actions/download-artifact@v4
         with:
           name: allure-results
