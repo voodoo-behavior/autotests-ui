@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: allure-results/allure-results
+          path: allure-results
 
 
   publish-report:
@@ -50,16 +50,6 @@ jobs:
     needs: run-tests
 
     steps:
-      - name: Download allure-results artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results
-
-      - name: Verify downloaded allure-results
-        run: |
-          echo "Checking allure-results directory..."
-          ls -la
-          ls -la allure-results || echo "allure-results directory not found"
 
       # 5. Шаг для получения истории отчётов Allure, если она существует
       - name: Get Allure history
@@ -70,9 +60,14 @@ jobs:
           ref: gh-pages  # Указываем ветку gh-pages для получения отчётов
           path: gh-pages  # Указываем путь для сохранения отчётов
 
+      - name: Download allure-results artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+
       # 6. Шаг для генерации и отображения отчёта Allure
       - name: Generates Allure Report with history
-        uses: simple-elf/allure-report-action@v1.12  # Используем готовое решение из GitHub Marketplace для генерации Allure отчёта
+        uses: simple-elf/allure-report-action@v1.7  # Используем готовое решение из GitHub Marketplace для генерации Allure отчёта
         if: always()  # Этот шаг тоже всегда выполняется
         with:
           allure_results: allure-results  # Указываем каталог с результатами тестов
