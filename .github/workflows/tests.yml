@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: gh-pages
+          path: allure-results
           
   publish-report:
     runs-on: ubuntu-latest
