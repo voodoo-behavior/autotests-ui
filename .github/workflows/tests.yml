@@ -51,6 +51,12 @@ jobs:
 
     steps:
 
+      - name: Download allure-results artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
       # 5. Шаг для получения истории отчётов Allure, если она существует
       - name: Get Allure history
         uses: actions/checkout@v4  # Опять клонируем репозиторий, чтобы получить историю отчётов
@@ -59,12 +65,6 @@ jobs:
         with:
           ref: gh-pages  # Указываем ветку gh-pages для получения отчётов
           path: gh-pages  # Указываем путь для сохранения отчётов
-
-      - name: Download allure-results artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results
-          path: allure-results
 
       # 6. Шаг для генерации и отображения отчёта Allure
       - name: Generates Allure Report with history
