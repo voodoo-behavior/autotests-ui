@@ -34,7 +34,7 @@ jobs:
           pytest -m regression --alluredir=allure-results --numprocesses 2
 
       - name: Upload allure-results artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         id: upload-artifacts
         with:
           name: allure-results
