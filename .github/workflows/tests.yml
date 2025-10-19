@@ -11,15 +11,14 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.13.0'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -30,32 +29,31 @@ jobs:
       - name: Run Playwright tests with pytest and generate Allure results
         run: |
           pytest -m regression --alluredir=allure-results --numprocesses 2
-          
-      - name: Upload allure report
-        uses: actions/upload-artifact@v4
+
+      - name: Upload Allure Results Artifact
+        uses: actions/upload-artifact@v3
         with:
           name: allure-results
           path: allure-results
-          
+
   publish-report:
-    runs-on: ubuntu-latest
     needs: run-tests
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Get Allure history
+      - name: Checkout repository
         uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
 
-      - name: Generates Allure Report with history
-        uses: simple-elf/allure-report-action@v1.12
-        if: always()
+      - name: Download Allure Results Artifact
+        uses: actions/download-artifact@v3
         with:
-          allure_results: allure-results
-          allure_history: allure-history
+          name: allure-results
+          path: downloaded-allure-results
+
+      - name: Generate Allure Report with history
+        uses: simple-elf/allure-report-action@v1.7
+        with:
+          allure_results: downloaded-allure-results
+          allure_history: gh-pages
 
       - name: Deploy report to Github Pages
         if: always()
