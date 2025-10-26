@@ -1,0 +1,16 @@
+INFO     BASE_PAGE:base_page.py:17 Opening url "AppRoute.LOGIN"
+INFO     BASE_ELEMENT:base_element.py:25 Getting locator with "data-testid=login-page-registration-link" at index "0"
+INFO     BASE_ELEMENT:base_element.py:42 Clicking link "Registration"
+INFO     BASE_PAGE:base_page.py:34 Checking current url matches pattern ".*/#/auth/registration"
+INFO     BASE_ELEMENT:base_element.py:25 Getting locator with "data-testid=registration-form-email-input" at index "0"
+INFO     BASE_ELEMENT:base_element.py:52 Checking input "Email" is visible
+INFO     BASE_ELEMENT:base_element.py:25 Getting locator with "data-testid=registration-form-email-input" at index "0"
+INFO     INPUT:input.py:36 Checking input "Email" has value ""
+INFO     BASE_ELEMENT:base_element.py:25 Getting locator with "data-testid=registration-form-username-input" at index "0"
+INFO     BASE_ELEMENT:base_element.py:52 Checking input "Username" is visible
+INFO     BASE_ELEMENT:base_element.py:25 Getting locator with "data-testid=registration-form-username-input" at index "0"
+INFO     INPUT:input.py:36 Checking input "Username" has value ""
+INFO     BASE_ELEMENT:base_element.py:25 Getting locator with "data-testid=registration-form-password-input" at index "0"
+INFO     BASE_ELEMENT:base_element.py:52 Checking input "Password" is visible
+INFO     BASE_ELEMENT:base_element.py:25 Getting locator with "data-testid=registration-form-password-input" at index "0"
+INFO     INPUT:input.py:36 Checking input "Password" has value ""
